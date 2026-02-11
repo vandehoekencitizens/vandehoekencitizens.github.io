@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Install Vandehoeken Citizens</title>
+    <link rel="icon" type="image/png" href="../logo.png">
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #f4f7f6; color: #333; padding: 40px 20px; }
+        .card { background: white; padding: 30px; border-radius: 20px; shadow: 0 10px 20px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+        img { width: 80px; border-radius: 15px; margin-bottom: 15px; }
+        h1 { font-size: 22px; margin-bottom: 5px; }
+        p { color: #666; margin-bottom: 25px; }
+        
+        .btn { background: #3498db; color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; display: inline-block; cursor: pointer; border: none; }
+        
+        /* Instructions box */
+        .instructions { display: none; margin-top: 20px; background: #eee; padding: 15px; border-radius: 10px; font-size: 14px; text-align: left; }
+        .show { display: block; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <img src="../logo.png" alt="Logo">
+        <h1>Vandehoeken Citizens</h1>
+        <p>Official Community Dashboard</p>
+
+        <button id="install-btn" class="btn" style="display:none;">Install App Now</button>
+
+        <div id="ios-instructions" class="instructions">
+            <strong>To Install on iPhone:</strong>
+            <ol>
+                <li>Tap the <strong>Share</strong> button (square with arrow) at the bottom.</li>
+                <li>Scroll down and tap <strong>"Add to Home Screen"</strong>.</li>
+            </ol>
+        </div>
+        
+        <p style="margin-top:20px;"><a href="../index.html" style="color:#3498db;">Open Web Version Instead</a></p>
+    </div>
+
+    <script>
+        const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const iosInstall = document.getElementById('ios-instructions');
+        const installBtn = document.getElementById('install-btn');
+
+        if (isIos) {
+            iosInstall.classList.add('show');
+        }
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'inline-block';
+        });
+
+        installBtn.addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choice) => {
+                    if (choice.outcome === 'accepted') installBtn.style.display = 'none';
+                    deferredPrompt = null;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
