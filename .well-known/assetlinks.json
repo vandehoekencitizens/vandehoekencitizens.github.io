@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.vandehoeken.citizens",
+        "sha256_cert_fingerprints": ["85:09:DF:2C:7F:D1:92:0B:25:F8:25:6C:9E:79:1E:2D:8C:13:16:15:85:0B:5F:23:FD:60:87:92:FE:72:39:C6"]
+      }
+    }]
